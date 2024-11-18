@@ -13,7 +13,7 @@ class SearchPage extends StatefulWidget {
 class _SearchPageState extends State<SearchPage> {
   int _currentPageIndex = 0; // For tracking current image index
   bool _showMoreDescription = false; // Toggle to show more description
-  int _selectedIconIndex = 1; // Track selected icon (0 for chat, 1 for toga, 2 for settings)
+  final int _selectedIconIndex = 1; // Track selected icon (0 for chat, 1 for toga, 2 for settings)
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class _SearchPageState extends State<SearchPage> {
             height: 40, // Adjust as needed
           ),
           title: const Text(
-            'Study Hub',
+            'Search',
             style: TextStyle(color: Colors.white, fontSize: 20),
           ),
         ),
@@ -163,56 +163,67 @@ class _SearchPageState extends State<SearchPage> {
         ],
       ),
 
-      // Bottom navigation bar with message, toga, and settings icon with shadow effect
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.green,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Container(
-              decoration: _selectedIconIndex == 0
-                  ? BoxDecoration(boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 10, spreadRadius: 1)]) // Warna hitam dengan 50% opacity
-                  : null,
-              child: IconButton(
-                icon: const Icon(Icons.message, color: Colors.white),
-                onPressed: () {
-                  setState(() {
-                    _selectedIconIndex = 0;
-                  });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const ChatListPage()));
-                },
+      // Bottom navigation bar with message, toga, and settings icon
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.green,
+        currentIndex: 1, // Set to 1 to highlight the "school" icon as active
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        selectedLabelStyle: const TextStyle(fontSize: 0), // Hide label
+        unselectedLabelStyle: const TextStyle(fontSize: 0), // Hide label
+        items: [
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: const Icon(Icons.chat, color: Colors.white),
             ),
-            Container(
-              decoration: _selectedIconIndex == 1
-                  ? BoxDecoration(boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 10, spreadRadius: 1)]) // Warna hitam dengan 50% opacity
-                  : null,
-              child: IconButton(
-                icon: const Icon(Icons.school, color: Colors.white),
-                onPressed: () {
-                  setState(() {
-                    _selectedIconIndex = 1;
-                  });
-                  // Implement action for Toga Icon
-                },
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.black26, // Background color dimmed for the active "school" icon
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: const Icon(Icons.school, color: Colors.white),
             ),
-            Container(
-              decoration: _selectedIconIndex == 2
-                  ? BoxDecoration(boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.5), blurRadius: 10, spreadRadius: 1)]) // Warna hitam dengan 50% opacity
-                  : null,
-              child: IconButton(
-                icon: const Icon(Icons.settings, color: Colors.white),
-                onPressed: () {
-                  setState(() {
-                    _selectedIconIndex = 2;
-                  });
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => const SettingsPage()));
-                },
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
               ),
+              child: const Icon(Icons.settings, color: Colors.white),
             ),
-          ],
-        ),
+            label: '',
+          ),
+        ],
+        onTap: (index) {
+          if (index == 0) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ChatListPage()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SearchPage()),
+            );
+          } else if (index == 2) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SettingsPage()),
+            );
+          }
+        },
       ),
     );
   }

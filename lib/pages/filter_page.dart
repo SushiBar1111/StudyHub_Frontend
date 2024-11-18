@@ -55,7 +55,6 @@ class _FilterPageState extends State<FilterPage> {
         final prefs = await SharedPreferences.getInstance();
 
         final userPreferences = jsonData['preferences'] as List;
-        print(jsonData); // jangan lupa diapus
         for (var preference in userPreferences) {
           final role = preference['role'];
           final gender = preference['gender'];
@@ -71,8 +70,6 @@ class _FilterPageState extends State<FilterPage> {
           prefs.setString('learningType', learningType);
           prefs.setString('matkul', matkul);
         }
-
-        print('User preferences stored successfully.');// jangan lupa diapus
       } else {
         print('Error saving user preferences: ${response.statusCode}');
         print(response.body);
@@ -117,101 +114,152 @@ class _FilterPageState extends State<FilterPage> {
         title: const Text(
           'Filter Page',
           style: TextStyle(
-            color: Colors.white,
+            color: Colors.green,
             fontFamily: 'OpenSans',
             fontWeight: FontWeight.w800,
           ),
         ),
-        backgroundColor: const Color(0xFF00796B),
+        backgroundColor: Colors.white,
         leading: const Icon(
-          color: Colors.white,
+          color: Colors.black,
           Icons.filter_alt_rounded,
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
-          color: const Color(0xFF009688),
+          color: Colors.white,
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const Text(
+                'Set Your Preferences',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
               const SizedBox(height: 20),
-              _buildDropdown("Gender :", Gender, selectedGender, (value) {
-                setState(() {
-                  selectedGender = value;
-                });
-              }),
-              const SizedBox(height: 20),
-              _buildDropdown("Subject :", subjects, selectedSubjects, (value) {
-                setState(() {
-                  selectedSubjects = value;
-                });
-              }),
-              const SizedBox(height: 20),
-              _buildDropdown("Role :", roles, selectedRole, (value) {
-                setState(() {
-                  selectedRole = value;
-                });
-              }),
-              const SizedBox(height: 20),
-              _buildDropdown("Academic Level :", academicLevels, selectedAcademicLevel, (value) {
-                setState(() {
+              _buildDropdown(
+                "Academic Level",
+                academicLevels,
+                selectedAcademicLevel,
+                    (value) => setState(() {
                   selectedAcademicLevel = value;
-                });
-              }),
-              const SizedBox(height: 20),
-              _buildDropdown("Study Place :", StudyPlace, selectedStudyPlace, (value) {
-                setState(() {
+                }),
+              ),
+              const SizedBox(height: 15),
+              _buildDropdown(
+                "Role",
+                roles,
+                selectedRole,
+                    (value) => setState(() {
+                  selectedRole = value;
+                }),
+              ),
+              const SizedBox(height: 15),
+              _buildDropdown(
+                "Subjects",
+                subjects,
+                selectedSubjects,
+                    (value) => setState(() {
+                  selectedSubjects = value;
+                }),
+              ),
+              const SizedBox(height: 15),
+              _buildDropdown(
+                "Gender",
+                Gender,
+                selectedGender,
+                    (value) => setState(() {
+                  selectedGender = value;
+                }),
+              ),
+              const SizedBox(height: 15),
+              _buildDropdown(
+                "Study Place",
+                StudyPlace,
+                selectedStudyPlace,
+                    (value) => setState(() {
                   selectedStudyPlace = value;
-                });
-              }),
-              const SizedBox(height: 20),
-              _buildDropdown("Learning Type :", LearningType, selectedLearningType, (value) {
-                setState(() {
+                }),
+              ),
+              const SizedBox(height: 15),
+              _buildDropdown(
+                "Learning Type",
+                LearningType,
+                selectedLearningType,
+                    (value) => setState(() {
                   selectedLearningType = value;
-                });
-              }),
-              const SizedBox(height: 80),
-              Center(
-                child: SizedBox(
-                  width: 106,
-                  height: 37,
-                  child: ElevatedButton(
-                    onPressed: userFilter,
+                }),
+              ),
+              const SizedBox(height: 30),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context); // Cancel button functionality
+                    },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF00796B),
+                      backgroundColor: Colors.grey[300], // Light grey
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
                     child: const Text(
-                      'Filter',
+                      "Cancel",
                       style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 20,
-                        fontFamily: 'OpenSans',
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green, // Green text color
                       ),
                     ),
                   ),
-                ),
-              )
+                  ElevatedButton(
+                    onPressed: userFilter,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[300], // Light grey
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.green, // Green text color
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF00796B),
-        items: const [
+        backgroundColor: Colors.green,
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat, color: Colors.white),
+            icon: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.rectangle,
+                color: Colors.black.withOpacity(0.3), // Reduced opacity
+                borderRadius: BorderRadius.circular(10),
+              ),
+              padding: const EdgeInsets.all(6.0),
+              child: const Icon(Icons.chat, color: Colors.white),
+            ),
             label: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.white),
+          const BottomNavigationBarItem(
+            icon: Icon(Icons.school, color: Colors.white),
             label: '',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.settings, color: Colors.white),
             label: '',
           ),
@@ -243,7 +291,7 @@ class _FilterPageState extends State<FilterPage> {
           style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
         const SizedBox(height: 5),
@@ -266,36 +314,6 @@ class _FilterPageState extends State<FilterPage> {
             underline: const SizedBox(),
             dropdownColor: Colors.grey[200],
             icon: Icon(Icons.arrow_drop_down, color: Colors.grey[700]),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTextField(String label, TextEditingController controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-          ),
-        ),
-        const SizedBox(height: 5),
-        Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.grey[200],
-          ),
-          child: TextFormField(
-            controller: controller,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-              border: InputBorder.none,
-            ),
           ),
         ),
       ],

@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:learn_hub/pages/profile_page.dart';
-import 'package:learn_hub/pages/filter_page.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
 import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:image_picker/image_picker.dart';
@@ -89,7 +88,7 @@ class _ChatPageState extends State<ChatPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF2F27CE),
+      backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: false,
         leading: Padding(
@@ -108,23 +107,12 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.filter_alt_rounded, color: Colors.white),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const FilterPage()),
-              );
-            },
-          ),
-        ],
-        backgroundColor: const Color(0xFF00796B),
+        backgroundColor: Colors.white,
       ),
       body: Column(
         children: [
           Container(
-            color: const Color(0xFF00796B),
+            color: Colors.green,
             padding: const EdgeInsets.all(5),
             child: Row(
               children: [
@@ -154,8 +142,8 @@ class _ChatPageState extends State<ChatPage> {
           Expanded(
             child: Chat(
               theme: const DefaultChatTheme(
-                inputBackgroundColor: Color(0xFF00796B),
-                backgroundColor: Color(0xFF009688),
+                inputBackgroundColor: Colors.green,
+                backgroundColor: Colors.white,
               ),
               bubbleBuilder: _bubbleBuilder,
               onAttachmentPressed: _handleImageSelection,
@@ -175,23 +163,34 @@ class _ChatPageState extends State<ChatPage> {
         required bool nextMessageInGroup,
       }) {
     final isCurrentUser = _user.id == message.author.id;
-    return Align(
-      alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
-        padding: const EdgeInsets.all(1),
-        decoration: BoxDecoration(
-          color: isCurrentUser ? Colors.black : Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: const Radius.circular(15),
-            topRight: const Radius.circular(15),
-            bottomLeft: isCurrentUser ? const Radius.circular(10) : const Radius.circular(0),
-            bottomRight: isCurrentUser ? const Radius.circular(0) : const Radius.circular(10),
+
+    if (message is types.TextMessage) {
+      return Align(
+        alignment: isCurrentUser ? Alignment.centerRight : Alignment.centerLeft,
+        child: Container(
+          margin: const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+            color: isCurrentUser ? Colors.green : Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: const Radius.circular(15),
+              topRight: const Radius.circular(15),
+              bottomLeft: isCurrentUser ? const Radius.circular(10) : const Radius.circular(0),
+              bottomRight: isCurrentUser ? const Radius.circular(0) : const Radius.circular(10),
+            ),
+          ),
+          child: Text(
+            message.text,
+            style: TextStyle(
+              color: isCurrentUser ? Colors.white : Colors.black,
+              fontSize: 16,
+            ),
           ),
         ),
-        child: child,
-      ),
-    );
+      );
+    }
+
+    return child; // Untuk pesan selain teks
   }
 
   void _handleImageSelection() async {

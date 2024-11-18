@@ -95,14 +95,16 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
 
   ImageProvider _imageFromFilePath(String? filePath) {
     if (filePath == null) {
-      return const NetworkImage('https://cdn.pixabay.com/photo/2023/08/24/19/58/saitama-8211499_1280.png');
+      return const NetworkImage(
+          'https://cdn.pixabay.com/photo/2023/08/24/19/58/saitama-8211499_1280.png');
     } else {
       return NetworkImage('http://10.0.2.2:8000/$filePath');
     }
   }
 
   Future<void> getUserData(String userId) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/profile?id=$userId'));
+    final response = await http.get(
+        Uri.parse('http://10.0.2.2:8000/profile?id=$userId'));
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       setState(() {
@@ -170,7 +172,8 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
   Future<void> uploadImage(File image) async {
     var request = http.MultipartRequest(
         'POST', Uri.parse('http://10.0.2.2:8000/profileImage/upload/'));
-    request.files.add(await http.MultipartFile.fromPath('profilePicture', image.path));
+    request.files.add(
+        await http.MultipartFile.fromPath('profilePicture', image.path));
     request.fields['id'] = userId ?? '';
 
     var response = await request.send();
@@ -194,20 +197,24 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
           ),
         ),
         centerTitle: false,
-        backgroundColor: const Color(0x5F5F5F),
+        backgroundColor: const Color(0x005f5f5f),
       ),
       body: SingleChildScrollView(
         child: Center(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10.0),
+            // Menambahkan padding di seluruh tepi
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Container(
-                  width: double.infinity, // Agar penuh ke kiri dan kanan
+                  width: double.infinity,
+                  // Pastikan ini mengisi lebar penuh
                   color: Colors.green,
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  margin: EdgeInsets.zero, // Agar tidak ada margin di tepi
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  // Padding vertikal
+                  margin: EdgeInsets.zero,
+                  // Tidak ada margin
                   child: const Text(
                     "My Profile",
                     style: TextStyle(
@@ -267,11 +274,12 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                   });
                 }),
                 const SizedBox(height: 10),
-                _buildDropdown("I am learning this subject :", subjects, selectedSubjects, (value) {
-                  setState(() {
-                    selectedSubjects = value;
-                  });
-                }),
+                _buildDropdown("I am learning this subject :", subjects,
+                    selectedSubjects, (value) {
+                      setState(() {
+                        selectedSubjects = value;
+                      });
+                    }),
                 const SizedBox(height: 10),
                 _buildDropdown("Gender :", genders, selectedGender, (value) {
                   setState(() {
@@ -283,19 +291,24 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                 const SizedBox(height: 10),
                 _buildTextField("Bio :", bioController),
                 const SizedBox(height: 10),
-                _buildDropdown("My Learning Type :", learningTypes, selectedLearningType, (value) {
+                _buildDropdown(
+                    "My Learning Type :", learningTypes, selectedLearningType, (
+                    value) {
                   setState(() {
                     selectedLearningType = value;
                   });
                 }),
                 const SizedBox(height: 10),
-                _buildDropdown("Preferred Study Place :", studyPlaces, selectedStudyPlace, (value) {
-                  setState(() {
-                    selectedStudyPlace = value;
-                  });
-                }),
+                _buildDropdown("Preferred Study Place :", studyPlaces,
+                    selectedStudyPlace, (value) {
+                      setState(() {
+                        selectedStudyPlace = value;
+                      });
+                    }),
                 const SizedBox(height: 10),
-                _buildDropdown("Academic Level :", academicLevels, selectedAcademicLevel, (value) {
+                _buildDropdown(
+                    "Academic Level :", academicLevels, selectedAcademicLevel, (
+                    value) {
                   setState(() {
                     selectedAcademicLevel = value;
                   });
@@ -306,7 +319,8 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                   children: [
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.green, // Warna hijau untuk tombol "Cancel"
+                        foregroundColor: Colors
+                            .green, // Warna hijau untuk tombol "Cancel"
                       ),
                       onPressed: () {
                         Navigator.of(context).pop();
@@ -316,7 +330,8 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
                     const SizedBox(width: 20),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.green, // Warna hijau untuk tombol "Save"
+                        foregroundColor: Colors
+                            .green, // Warna hijau untuk tombol "Save"
                       ),
                       onPressed: updateUserData,
                       child: const Text('Save'),
@@ -342,14 +357,16 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
           controller: controller,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.symmetric(
+                vertical: 10.0), // Menambahkan padding di dalam TextField
           ),
         ),
       ],
     );
   }
 
-  Widget _buildDropdown(
-      String label, List<String> items, String? selectedValue, ValueChanged<String?> onChanged) {
+  Widget _buildDropdown(String label, List<String> items, String? selectedValue,
+      ValueChanged<String?> onChanged) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -358,6 +375,8 @@ class _ProfilePageContentState extends State<ProfilePageContent> {
         DropdownButtonFormField<String>(
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
+            contentPadding: EdgeInsets.symmetric(
+                vertical: 10.0), // Menambahkan padding di dalam Dropdown
           ),
           value: selectedValue,
           items: items.map((String value) {

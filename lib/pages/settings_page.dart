@@ -1,139 +1,219 @@
 import 'package:flutter/material.dart';
 import 'package:learn_hub/pages/chatlist_page.dart';
 import 'package:learn_hub/pages/login_page.dart';
+import 'package:learn_hub/pages/search_page.dart';
 
 class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    double fem = 1.0; // Adjust this value based on your requirements
-    double ffem = 1.0; // Adjust this value based on your requirements
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Settings",
-          style: TextStyle(
-              color: Colors.white,
-            fontFamily: 'OpenSans',
-            fontWeight: FontWeight.w800,
+        automaticallyImplyLeading: false,
+        title: ListTile(
+          contentPadding: EdgeInsets.zero,
+          leading: Image.asset(
+            'lib/images/Study Hub Logo.png',
+            height: 40,
           ),
         ),
-        leading: const Icon(Icons.settings, size: 40, color: Colors.white),
-        backgroundColor: const Color(0xFF00796B),
+        centerTitle: false,
+        backgroundColor: Colors.white,
       ),
-      backgroundColor: const Color(0xFF009688),
-      body: Center(
-        child: Container(
-          constraints: const BoxConstraints(maxWidth: 400),
-          child: ListView(
-            children: const [
-              _SingleSection(
-                title: "Account Settings",
-                fontFamily: 'OpenSans',
-                children: [
-                  _CustomListTile(
-                    title: "Account",
-                    icon: Icons.person,
-                    fontFamily: 'OpenSans',
-                  ),
-                  _CustomListTile(
-                    title: "Privacy & Security",
-                    icon: Icons.lock,
-                    fontFamily: 'OpenSans',
-                  ),
-                  _CustomListTile(
-                    title: "Premium",
-                    icon: Icons.workspace_premium_rounded,
-                    fontFamily: 'OpenSans',
-                  ),
-                ],
-              ),
-              _SingleSection(
-                title: "App Settings",
-                fontFamily: 'OpenSans',
-                children: [
-                  _CustomListTile(
-                    title: "Notification",
-                    icon: Icons.notifications,
-                    fontFamily: 'OpenSans',
-                  ),
-                  _CustomListTile(
-                    title: "Chats",
-                    icon: Icons.chat,
-                    fontFamily: 'OpenSans',
-                  ),
-                  _CustomListTile(
-                    title: "Language",
-                    icon: Icons.language_rounded,
-                    fontFamily: 'OpenSans',
-                  ),
-                ],
-              ),
-              _SingleSection(
-                title: "Support",
-                fontFamily: 'OpenSans',
-                children: [
-                  _CustomListTile(
-                    title: "Support",
-                    icon: Icons.support_agent_rounded,
-                    fontFamily: 'OpenSans',
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
+      backgroundColor: Colors.white,
 
-      // Logout button
-      floatingActionButtonLocation: FloatingActionButtonLocation.startDocked,
-      floatingActionButton: Container(
-        margin: const EdgeInsets.only(left: 16.0, bottom: 70.0),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LoginPage()),
-                );
-              },
+      body: Column(
+        children: [
+          // Kotak hijau bertuliskan "Settings"
+          Container(
+            width: double.infinity,
+            color: Colors.green,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child: const Center(
+              child: Text(
+                "Settings",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+
+          // Kotak "StudyHub Premium" yang lebih besar dan bisa dipencet
+          GestureDetector(
             child: Container(
-              width: 106,
-              height: 37,
+              width: double.infinity,
+              margin: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                border: Border.all(color: Colors.green),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: const Center(
-                child: Text(
-                  'Log Out',
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20,
-                    fontFamily: 'OpenSans',
+              child: Center(
+                child: RichText(
+                  textAlign: TextAlign.center,
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'StudyHub\n',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Premium',
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.amber, // Warna emas
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
             ),
           ),
-        ),
+
+          Expanded(
+            child: ListView(
+              children: const [
+                _SingleSection(
+                  title: "Account Settings",
+                  fontFamily: 'OpenSans',
+                  children: [
+                    _CustomListTile(
+                      title: "Account",
+                      icon: Icons.person,
+                      fontFamily: 'OpenSans',
+                    ),
+                    _CustomListTile(
+                      title: "Privacy & Security",
+                      icon: Icons.lock,
+                      fontFamily: 'OpenSans',
+                    ),
+                    _CustomListTile(
+                      title: "Premium",
+                      icon: Icons.workspace_premium_rounded,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ],
+                ),
+                _SingleSection(
+                  title: "App Settings",
+                  fontFamily: 'OpenSans',
+                  children: [
+                    _CustomListTile(
+                      title: "Notification",
+                      icon: Icons.notifications,
+                      fontFamily: 'OpenSans',
+                    ),
+                    _CustomListTile(
+                      title: "Chats",
+                      icon: Icons.chat,
+                      fontFamily: 'OpenSans',
+                    ),
+                    _CustomListTile(
+                      title: "Language",
+                      icon: Icons.language_rounded,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ],
+                ),
+                _SingleSection(
+                  title: "Support",
+                  fontFamily: 'OpenSans',
+                  children: [
+                    _CustomListTile(
+                      title: "Support",
+                      icon: Icons.support_agent_rounded,
+                      fontFamily: 'OpenSans',
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          // Tombol Logout di bagian paling bawah layar
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 20.0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12), // Adjusted padding for a smaller button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20), // More rounded corners
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                  );
+                },
+                child: const Text(
+                  "Log out",
+                  style: TextStyle(
+                    fontSize: 16, // Reduced font size
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ),
+
+        ],
       ),
+
+      // Bottom navigation bar
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF00796B),
-        items: const [
+        backgroundColor: Colors.green,
+        currentIndex: 2, // Set to 2 to highlight the "Settings" icon as active
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white70,
+        selectedLabelStyle: const TextStyle(fontSize: 0), // Hide label
+        unselectedLabelStyle: const TextStyle(fontSize: 0), // Hide label
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.chat, color: Colors.white),
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.chat, color: Colors.white),
+            ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search, color: Colors.white),
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.school, color: Colors.white),
+            ),
             label: '',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.settings, color: Colors.white),
+            icon: Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: Colors.black26, // Warna latar belakang redup
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: const Icon(Icons.settings, color: Colors.white),
+            ),
             label: '',
           ),
         ],
@@ -142,6 +222,11 @@ class SettingsPage extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ChatListPage()),
+            );
+          } else if (index == 1) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const SearchPage()),
             );
           } else if (index == 2) {
             Navigator.push(
@@ -155,75 +240,71 @@ class SettingsPage extends StatelessWidget {
   }
 }
 
-class _CustomListTile extends StatelessWidget {
+// Widget untuk membuat bagian pengaturan
+class _SingleSection extends StatelessWidget {
   final String title;
-  final IconData icon;
-  final Widget? trailing;
-  final Color? titleColor;
-  final Color? iconColor;
-  final String? fontFamily;
-  const _CustomListTile(
-      {required this.title,
-        required this.icon,
-        this.fontFamily, this.trailing, this.titleColor, this.iconColor,
-      });
+  final String fontFamily;
+  final List<Widget> children;
+
+  const _SingleSection({
+    required this.title,
+    required this.fontFamily,
+    required this.children,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      title: Text(title,
-        style: TextStyle(
-          color: titleColor ?? Colors.white,
-          fontFamily: fontFamily,
-          fontWeight: FontWeight.bold,
-        ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              fontFamily: fontFamily,
+            ),
+          ),
+          ...children,
+        ],
       ),
-      leading: Icon(
-        icon,
-        color: iconColor,
-      ),
-      trailing: trailing ?? const Icon(Icons.arrow_forward_ios, size: 18, color: Colors.white,),
-      onTap: () {},
     );
   }
 }
 
-class _SingleSection extends StatelessWidget {
+// Widget untuk setiap item dalam daftar pengaturan
+class _CustomListTile extends StatelessWidget {
   final String title;
-  final List<Widget> children;
-  final Color? titleColor;
-  final String? fontFamily;
-  const _SingleSection({
+  final IconData icon;
+  final String fontFamily;
+
+  const _CustomListTile({
     required this.title,
-    required this.children,
-    this.fontFamily, this.titleColor,
+    required this.icon,
+    required this.fontFamily,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-            title.toString(),
-            style:
-            Theme.of(context).textTheme.displaySmall?.copyWith(fontSize: 16,
-            color: titleColor ?? Colors.white,
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.w800,
+        ListTile(
+          leading: Icon(icon, color: Colors.green),
+          title: Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontFamily: fontFamily,
             ),
           ),
+          trailing: const Icon(Icons.arrow_forward_ios, color: Colors.grey, size: 16),
+          onTap: () {
+            // Tambahkan fungsi navigasi atau aksi yang sesuai
+          },
         ),
-        SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: children,
-          ),
-        ),
+        const Divider(color: Colors.black26, thickness: 1), // Garis bawah tipis
       ],
     );
   }
